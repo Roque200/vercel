@@ -1,4 +1,4 @@
-// api/usuarios.js
+// api/practica.js
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -15,18 +15,18 @@ export default async function handler(req, res) {
   if (method === 'GET') {
     if (query.id) {
       const { data, error } = await supabase
-        .from('usuarios')
-        .select('id, nombre, email, edad')
+        .from('practica')
+        .select('id, nombre, numero_control, fecha_creacion')
         .eq('id', query.id)
         .single();
 
-      if (error) return res.status(404).json({ error: 'Usuario no encontrado' });
+      if (error) return res.status(404).json({ error: 'Registro no encontrado' });
       return res.status(200).json(data);
     }
 
     const { data, error } = await supabase
-      .from('usuarios')
-      .select('id, nombre, email, edad');
+      .from('practica')
+      .select('id, nombre, numero_control, fecha_creacion');
 
     if (error) return res.status(500).json({ error: error.message });
     return res.status(200).json(data);
